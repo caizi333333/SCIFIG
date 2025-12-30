@@ -1,0 +1,95 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sci-figure-toolkit"
+version = "1.0.0"
+description = "SCI paper figure standardization toolkit - audit, fix, and generate publication-ready scientific figures"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Scientific Figure Standards Team", email = "sci-figure@example.com"}
+]
+maintainers = [
+    {name = "Scientific Figure Standards Team", email = "sci-figure@example.com"}
+]
+keywords = [
+    "scientific-figures",
+    "matplotlib",
+    "publication",
+    "data-visualization",
+    "academic",
+    "SCI",
+    "journal",
+    "figure-standards"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Visualization",
+    "Topic :: Scientific/Engineering",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "matplotlib>=3.5.0",
+    "numpy>=1.20.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0.0",
+]
+docs = [
+    "sphinx>=6.0.0",
+    "sphinx-rtd-theme>=1.0.0",
+    "myst-parser>=2.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/sci-figure/sci-figure-toolkit"
+Documentation = "https://sci-figure-toolkit.readthedocs.io"
+Repository = "https://github.com/sci-figure/sci-figure-toolkit"
+Issues = "https://github.com/sci-figure/sci-figure-toolkit/issues"
+Changelog = "https://github.com/sci-figure/sci-figure-toolkit/blob/main/CHANGELOG.md"
+
+[project.scripts]
+sci-figure-audit = "sci_figure_toolkit.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+sci_figure_toolkit = ["py.typed"]
+
+[tool.black]
+line-length = 88
+target-version = ["py38", "py39", "py310", "py311", "py312"]
+include = '\.pyi?$'
+
+[tool.ruff]
+line-length = 88
+select = ["E", "F", "W", "I", "N", "D", "UP"]
+ignore = ["D100", "D104"]
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --cov=sci_figure_toolkit --cov-report=term-missing"
