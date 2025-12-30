@@ -268,6 +268,38 @@ Real-world examples from published papers showing before/after comparisons:
 |--------|-------|
 | ![Before](docs/images/case5_before.png) | ![After](docs/images/case5_after.png) |
 
+### Case 6: Font Inconsistency → Standardized Fonts
+
+**Problem**: Mixed font sizes (14pt, 8pt, 12pt, etc.) across figure elements
+
+| Before | After |
+|--------|-------|
+| ![Before](docs/images/case6_before.png) | ![After](docs/images/case6_after.png) |
+
+### Case 7: Non-Standard Figure Size → Journal Standard
+
+**Problem**: Arbitrary 10" width doesn't match journal requirements
+
+| Before | After |
+|--------|-------|
+| ![Before](docs/images/case7_before.png) | ![After](docs/images/case7_after.png) |
+
+### Case 8: Low DPI Output → Publication Quality
+
+**Problem**: 72 DPI screen resolution appears pixelated in print
+
+| Before | After |
+|--------|-------|
+| ![Before](docs/images/case8_before.png) | ![After](docs/images/case8_after.png) |
+
+### Case 9: Non-Colorblind Safe → Accessible Colors
+
+**Problem**: Red-green colors indistinguishable for ~8% of male readers
+
+| Before | After |
+|--------|-------|
+| ![Before](docs/images/case9_before.png) | ![After](docs/images/case9_after.png) |
+
 > 📖 See [Case Studies Documentation](docs/case-studies.md) for detailed code examples.
 
 ## Contributing

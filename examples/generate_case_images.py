@@ -353,6 +353,229 @@ def generate_case5():
     print("✅ Generated: case5_before.png, case5_after.png")
 
 
+def generate_case6():
+    """
+    Case 6: Font Inconsistency
+
+    Before: Mixed font sizes across figure elements
+    After: Consistent SCI-standard font sizes
+    """
+    np.random.seed(42)
+    x = np.linspace(0, 10, 50)
+    y = np.sin(x) + np.random.normal(0, 0.1, len(x))
+
+    # BEFORE: Inconsistent fonts
+    fig_before, ax = plt.subplots(figsize=(5, 4))
+    fig_before.suptitle('BEFORE: Inconsistent Font Sizes', fontsize=10, y=0.98)
+
+    ax.plot(x, y, 'o-', markersize=4, color='#0072B2')
+    ax.set_xlabel('Time (s)', fontsize=14)      # Too large!
+    ax.set_ylabel('Amplitude', fontsize=8)       # Too small!
+    ax.set_title('Signal Analysis', fontsize=12)  # Inconsistent!
+    ax.tick_params(axis='x', labelsize=10)       # Different from y!
+    ax.tick_params(axis='y', labelsize=6)        # Too small!
+    ax.legend(['Data'], fontsize=11, loc='upper right')  # Random size!
+
+    # Add annotation with yet another size
+    ax.annotate('Peak', xy=(1.5, 1.0), fontsize=15,
+                arrowprops=dict(arrowstyle='->'))
+
+    plt.tight_layout()
+    fig_before.savefig(OUTPUT_DIR / 'case6_before.png', bbox_inches='tight',
+                       facecolor='white', edgecolor='none')
+    plt.close(fig_before)
+
+    # AFTER: Consistent fonts (SCI standard)
+    fig_after, ax = plt.subplots(figsize=(5, 4))
+    fig_after.suptitle('AFTER: Consistent SCI-Standard Fonts', fontsize=10, y=0.98)
+
+    ax.plot(x, y, 'o-', markersize=4, color='#0072B2')
+    ax.set_xlabel('Time (s)', fontsize=9)        # Standard: 9pt
+    ax.set_ylabel('Amplitude', fontsize=9)       # Standard: 9pt
+    ax.set_title('Signal Analysis', fontsize=9)  # Standard: 9pt
+    ax.tick_params(axis='both', labelsize=8)     # Standard: 8pt
+    ax.legend(['Data'], fontsize=8, loc='upper right')  # Standard: 8pt
+
+    # Annotation with standard size
+    ax.annotate('Peak', xy=(1.5, 1.0), fontsize=7,  # Standard: 7pt
+                arrowprops=dict(arrowstyle='->'))
+
+    plt.tight_layout()
+    fig_after.savefig(OUTPUT_DIR / 'case6_after.png', bbox_inches='tight',
+                      facecolor='white', edgecolor='none')
+    plt.close(fig_after)
+
+    print("✅ Generated: case6_before.png, case6_after.png")
+
+
+def generate_case7():
+    """
+    Case 7: Non-Standard Figure Size
+
+    Before: Arbitrary figure size (10x6 inches)
+    After: Journal-standard width (7.0 inches for double column)
+    """
+    np.random.seed(42)
+    x = np.linspace(0, 10, 100)
+
+    # BEFORE: Non-standard size (too wide)
+    fig_before, axes = plt.subplots(1, 3, figsize=(10, 3))  # Non-standard!
+    fig_before.suptitle('BEFORE: Non-Standard Size (10" wide)', fontsize=10, y=1.02)
+
+    for i, ax in enumerate(axes):
+        y = np.sin(x + i) + np.random.normal(0, 0.1, len(x))
+        ax.plot(x, y, '-', color='#0072B2', linewidth=1.5)
+        ax.set_title(f'({chr(97+i)}) Panel {i+1}')
+        ax.set_xlabel('X')
+        ax.set_ylabel('Y')
+
+    # Add size annotation
+    fig_before.text(0.5, -0.05, '⚠️ Width: 10.0" (non-standard)',
+                   ha='center', fontsize=9, color='red',
+                   transform=fig_before.transFigure)
+
+    plt.tight_layout(rect=[0, 0.05, 1, 0.98])
+    fig_before.savefig(OUTPUT_DIR / 'case7_before.png', bbox_inches='tight',
+                       facecolor='white', edgecolor='none')
+    plt.close(fig_before)
+
+    # AFTER: Standard double-column width
+    fig_after, axes = plt.subplots(1, 3, figsize=(7.0, 2.5))  # Nature standard!
+    fig_after.suptitle('AFTER: Standard Double-Column (7.0")', fontsize=10, y=1.02)
+
+    for i, ax in enumerate(axes):
+        y = np.sin(x + i) + np.random.normal(0, 0.1, len(x))
+        ax.plot(x, y, '-', color='#0072B2', linewidth=1.5)
+        ax.set_title(f'({chr(97+i)}) Panel {i+1}')
+        ax.set_xlabel('X')
+        ax.set_ylabel('Y')
+
+    # Add size annotation
+    fig_after.text(0.5, -0.05, '✓ Width: 7.0" (Nature/Science standard)',
+                  ha='center', fontsize=9, color='green',
+                  transform=fig_after.transFigure)
+
+    plt.tight_layout(rect=[0, 0.05, 1, 0.98])
+    fig_after.savefig(OUTPUT_DIR / 'case7_after.png', bbox_inches='tight',
+                      facecolor='white', edgecolor='none')
+    plt.close(fig_after)
+
+    print("✅ Generated: case7_before.png, case7_after.png")
+
+
+def generate_case8():
+    """
+    Case 8: Low DPI Output
+
+    Before: 72 DPI (screen resolution, pixelated in print)
+    After: 600 DPI (publication quality)
+    """
+    np.random.seed(42)
+    x = np.linspace(0, 2*np.pi, 100)
+    y = np.sin(x)
+
+    # BEFORE: Low DPI (simulated with visible pixels)
+    fig_before, ax = plt.subplots(figsize=(4, 3))
+    fig_before.suptitle('BEFORE: Low Resolution (72 DPI)', fontsize=10, y=0.98)
+
+    ax.plot(x, y, '-', color='#0072B2', linewidth=2)
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_title('Sine Wave')
+
+    # Add DPI warning
+    ax.text(0.5, -0.15, '⚠️ 72 DPI - Will appear pixelated in print',
+           ha='center', fontsize=8, color='red',
+           transform=ax.transAxes)
+
+    plt.tight_layout()
+    # Save at low DPI to show the problem
+    fig_before.savefig(OUTPUT_DIR / 'case8_before.png', dpi=72,
+                       bbox_inches='tight', facecolor='white', edgecolor='none')
+    plt.close(fig_before)
+
+    # AFTER: High DPI
+    fig_after, ax = plt.subplots(figsize=(4, 3))
+    fig_after.suptitle('AFTER: Publication Quality (600 DPI)', fontsize=10, y=0.98)
+
+    ax.plot(x, y, '-', color='#0072B2', linewidth=2)
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_title('Sine Wave')
+
+    # Add DPI confirmation
+    ax.text(0.5, -0.15, '✓ 600 DPI - Publication ready',
+           ha='center', fontsize=8, color='green',
+           transform=ax.transAxes)
+
+    plt.tight_layout()
+    fig_after.savefig(OUTPUT_DIR / 'case8_after.png', dpi=300,  # Use 300 for file size
+                      bbox_inches='tight', facecolor='white', edgecolor='none')
+    plt.close(fig_after)
+
+    print("✅ Generated: case8_before.png, case8_after.png")
+
+
+def generate_case9():
+    """
+    Case 9: Non-Colorblind Safe Colors
+
+    Before: Red-green color scheme (problematic for ~8% of males)
+    After: Colorblind-safe palette (Wong 2011)
+    """
+    np.random.seed(42)
+    x = np.linspace(0, 10, 50)
+
+    # BEFORE: Red-green (problematic)
+    fig_before, ax = plt.subplots(figsize=(5, 4))
+    fig_before.suptitle('BEFORE: Red-Green Colors (Not Colorblind Safe)', fontsize=10, y=0.98)
+
+    colors_bad = ['red', 'green', 'orange', 'purple']
+    for i, c in enumerate(colors_bad):
+        y = np.sin(x + i*0.5) + i*0.5
+        ax.plot(x, y, '-', color=c, linewidth=2, label=f'Series {i+1}')
+
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.legend(loc='upper right')
+
+    # Warning
+    ax.text(0.5, -0.12, '⚠️ Red/Green indistinguishable for colorblind viewers',
+           ha='center', fontsize=8, color='red',
+           transform=ax.transAxes)
+
+    plt.tight_layout()
+    fig_before.savefig(OUTPUT_DIR / 'case9_before.png', bbox_inches='tight',
+                       facecolor='white', edgecolor='none')
+    plt.close(fig_before)
+
+    # AFTER: Colorblind-safe (Wong 2011)
+    fig_after, ax = plt.subplots(figsize=(5, 4))
+    fig_after.suptitle('AFTER: Colorblind-Safe Palette (Wong 2011)', fontsize=10, y=0.98)
+
+    # Wong 2011 colorblind-safe palette
+    colors_good = ['#0072B2', '#D55E00', '#009E73', '#CC79A7']
+    for i, c in enumerate(colors_good):
+        y = np.sin(x + i*0.5) + i*0.5
+        ax.plot(x, y, '-', color=c, linewidth=2, label=f'Series {i+1}')
+
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.legend(loc='upper right')
+
+    # Confirmation
+    ax.text(0.5, -0.12, '✓ Colors distinguishable for all viewers',
+           ha='center', fontsize=8, color='green',
+           transform=ax.transAxes)
+
+    plt.tight_layout()
+    fig_after.savefig(OUTPUT_DIR / 'case9_after.png', bbox_inches='tight',
+                      facecolor='white', edgecolor='none')
+    plt.close(fig_after)
+
+    print("✅ Generated: case9_before.png, case9_after.png")
+
+
 def main():
     """Generate all case study images."""
     print("\n" + "=" * 50)
@@ -367,6 +590,10 @@ def main():
     generate_case3()
     generate_case4()
     generate_case5()
+    generate_case6()
+    generate_case7()
+    generate_case8()
+    generate_case9()
 
     print("\n" + "=" * 50)
     print(f"All images saved to: {OUTPUT_DIR}")
