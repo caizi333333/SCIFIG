@@ -268,9 +268,9 @@ Real-world examples from published papers showing before/after comparisons:
 |--------|-------|
 | ![Before](docs/images/case5_before.png) | ![After](docs/images/case5_after.png) |
 
-### Case 6: Font Inconsistency → Standardized Fonts
+### Case 6: Font Inconsistency → Standardized Fonts + Pattern E
 
-**Problem**: Mixed font sizes (14pt, 8pt, 12pt, etc.) across figure elements
+**Problem**: Mixed font sizes (14pt, 8pt, 12pt, etc.) across figure elements, plus arrow annotation that could occlude data
 
 | Before | After |
 |--------|-------|

@@ -154,6 +154,7 @@ class FigureAuditor:
         self._check_redundant_legends(axes)
         self._check_font_consistency(axes)
         self._check_legend_occlusion(axes)
+        self._check_annotation_occlusion(axes)
         self._check_missing_labels(axes)
 
         return self.issues
@@ -319,6 +320,48 @@ class FigureAuditor:
                     location=f"subplot {i}",
                     auto_fixable=False
                 ))
+
+    def _check_annotation_occlusion(self, axes: List[plt.Axes]) -> None:
+        """Check for potential annotation-data occlusion."""
+        for i, ax in enumerate(axes):
+            # Get all text elements that could occlude data
+            texts = ax.texts
+            annotations = ax.texts  # Annotations are also in ax.texts
+
+            # Check for annotations with arrows (likely pointing at data)
+            for child in ax.get_children():
+                if hasattr(child, 'arrow_patch') and child.arrow_patch is not None:
+                    # This is an annotation with an arrow
+                    self.issues.append(Issue(
+                        type=IssueType.ANNOTATION_OCCLUSION,
+                        severity=Severity.INFO,
+                        message=f"Subplot {i}: Arrow annotation may occlude data",
+                        suggestion=(
+                            "Consider Pattern E: Move annotation info to title. "
+                            "Use ax.set_title('Title\\n(info here)') instead of ax.annotate()"
+                        ),
+                        location=f"subplot {i}",
+                        auto_fixable=False
+                    ))
+                    break  # Only report once per subplot
+
+            # Check for text boxes that might overlap data area
+            for text in texts:
+                bbox = text.get_bbox_patch()
+                if bbox is not None:
+                    # Text has a background box - potential occlusion
+                    self.issues.append(Issue(
+                        type=IssueType.ANNOTATION_OCCLUSION,
+                        severity=Severity.WARNING,
+                        message=f"Subplot {i}: Text box may occlude data",
+                        suggestion=(
+                            "Consider Pattern E: Move annotation to title. "
+                            "Or use Pattern F: inline labels on reference lines"
+                        ),
+                        location=f"subplot {i}",
+                        auto_fixable=False
+                    ))
+                    break  # Only report once per subplot
 
     def _check_missing_labels(self, axes: List[plt.Axes]) -> None:
         """Check for missing axis labels."""

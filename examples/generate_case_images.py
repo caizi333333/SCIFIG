@@ -385,20 +385,23 @@ def generate_case6():
                        facecolor='white', edgecolor='none')
     plt.close(fig_before)
 
-    # AFTER: Consistent fonts (SCI standard)
+    # AFTER: Consistent fonts (SCI standard) + Pattern E for annotation
     fig_after, ax = plt.subplots(figsize=(5, 4))
     fig_after.suptitle('AFTER: Consistent SCI-Standard Fonts', fontsize=10, y=0.98)
 
     ax.plot(x, y, 'o-', markersize=4, color='#0072B2')
     ax.set_xlabel('Time (s)', fontsize=9)        # Standard: 9pt
     ax.set_ylabel('Amplitude', fontsize=9)       # Standard: 9pt
-    ax.set_title('Signal Analysis', fontsize=9)  # Standard: 9pt
     ax.tick_params(axis='both', labelsize=8)     # Standard: 8pt
     ax.legend(['Data'], fontsize=8, loc='upper right')  # Standard: 8pt
 
-    # Annotation with standard size
-    ax.annotate('Peak', xy=(1.5, 1.0), fontsize=7,  # Standard: 7pt
-                arrowprops=dict(arrowstyle='->'))
+    # Pattern E: Move annotation info to title instead of in-plot arrow
+    # This avoids potential data occlusion
+    peak_idx = np.argmax(y)
+    peak_x, peak_y = x[peak_idx], y[peak_idx]
+    ax.set_title(f'Signal Analysis\n(Peak at t={peak_x:.1f}s, A={peak_y:.2f})', fontsize=9)  # Standard: 9pt
+
+    # NO arrow annotation that could occlude data!
 
     plt.tight_layout()
     fig_after.savefig(OUTPUT_DIR / 'case6_after.png', bbox_inches='tight',

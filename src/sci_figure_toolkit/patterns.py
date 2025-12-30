@@ -175,9 +175,20 @@ class TitleAnnotation:
     """
     Pattern E: Move annotations into subplot titles.
 
-    Use when: Data fills most of the plot area, leaving no safe position for text
+    Use when:
+        - Data fills most of the plot area, leaving no safe position for text
+        - Arrow annotations would point at data and occlude it
+        - Text boxes or labels would overlap with data curves
+        - Need to display key numerical results (optimal values, R², etc.)
+
+    Why this matters:
+        - ax.annotate() with arrows often occludes data points
+        - Text boxes (bbox=dict(...)) can hide important data curves
+        - Title area is always safe and doesn't overlap plot data
 
     Example:
+        >>> # INSTEAD OF: ax.annotate('Peak', xy=(1.5, 1.0), arrowprops=...)
+        >>> # USE: Move info to title
         >>> ax.set_title(TitleAnnotation.format(
         ...     "(a) L-curve Analysis",
         ...     optimal_lambda=0.14
