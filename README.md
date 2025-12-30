@@ -1,7 +1,7 @@
 # SCI Figure Toolkit
 
 <p align="center">
-  <img src="docs/images/logo.png" alt="SCI Figure Toolkit" width="200"/>
+  <strong>🔬 SCI Figure Toolkit</strong>
 </p>
 
 <p align="center">
@@ -64,8 +64,8 @@ pip install sci-figure-toolkit
 ### From Source
 
 ```bash
-git clone https://github.com/yourusername/sci-figure-toolkit.git
-cd sci-figure-toolkit
+git clone https://github.com/caizi333333/SCIFIG.git
+cd SCIFIG
 pip install -e .
 ```
 
@@ -226,14 +226,49 @@ fig.savefig('example3.pdf')
 
 ## Case Studies
 
-Real-world examples from published papers:
+Real-world examples from published papers showing before/after comparisons:
 
-| Case | Problem | Solution | Before/After |
-|------|---------|----------|--------------|
-| [Case 1](docs/cases/case1.md) | 3x redundant frequency legend | Pattern B | [View](docs/images/case1.png) |
-| [Case 2](docs/cases/case2.md) | Warning box occludes data | Pattern E | [View](docs/images/case2.png) |
-| [Case 3](docs/cases/case3.md) | Negative bar label invisible | Smart Labels | [View](docs/images/case3.png) |
-| [Case 4](docs/cases/case4.md) | Threshold clutters legend | Pattern F | [View](docs/images/case4.png) |
+### Case 1: Redundant Legends → Pattern B
+
+**Problem**: Each subplot has identical legends (3x redundancy)
+
+| Before | After |
+|--------|-------|
+| ![Before](docs/images/case1_before.png) | ![After](docs/images/case1_after.png) |
+
+### Case 2: Data Occlusion → Pattern E
+
+**Problem**: Yellow warning box covers data curves
+
+| Before | After |
+|--------|-------|
+| ![Before](docs/images/case2_before.png) | ![After](docs/images/case2_after.png) |
+
+### Case 3: Broken Annotations → Pattern E
+
+**Problem**: Truncated format string shows ".0e" instead of value
+
+| Before | After |
+|--------|-------|
+| ![Before](docs/images/case3_before.png) | ![After](docs/images/case3_after.png) |
+
+### Case 4: Reference Line Labels → Pattern F
+
+**Problem**: Text label in corner occludes data
+
+| Before | After |
+|--------|-------|
+| ![Before](docs/images/case4_before.png) | ![After](docs/images/case4_after.png) |
+
+### Case 5: Bar Chart Labels → Smart Labels
+
+**Problem**: Negative bar labels invisible (white text on short bar)
+
+| Before | After |
+|--------|-------|
+| ![Before](docs/images/case5_before.png) | ![After](docs/images/case5_after.png) |
+
+> 📖 See [Case Studies Documentation](docs/case-studies.md) for detailed code examples.
 
 ## Contributing
 
@@ -266,7 +301,7 @@ If you use this toolkit in your research, please cite:
   title = {SCI Figure Toolkit: Publication-Ready Figure Quality Control},
   author = {Your Name},
   year = {2024},
-  url = {https://github.com/yourusername/sci-figure-toolkit}
+  url = {https://github.com/caizi333333/SCIFIG}
 }
 ```
 
